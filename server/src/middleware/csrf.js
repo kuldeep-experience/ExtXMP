@@ -3,7 +3,8 @@ import { randomToken, safeEqual } from '../lib/tokens.js';
 import { ApiError } from './error.js';
 
 export const CSRF_COOKIE = 'evp_csrf';
-const cookieOpts = { httpOnly: true, sameSite: 'lax', secure: env.NODE_ENV === 'production', path: '/' };
+// In production the frontend (e.g. Vercel) and the API are on different sites, so the cookie must be SameSite=None (and Secure). Locally it stays Lax.
+const cookieOpts = { httpOnly: true, sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax', secure: env.NODE_ENV === 'production', path: '/' };
 
 // Double-submit token: the cookie is HttpOnly, the client learns the value from GET /api/auth/csrf
 // and echoes it in the x-csrf-token header on every state-changing request.

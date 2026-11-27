@@ -5,7 +5,8 @@ import { ApiError } from './error.js';
 
 export const TOKEN_COOKIE = 'evp_token';
 const maxAge = env.ACCESS_TOKEN_TTL_MINUTES * 60 * 1000;
-const cookieOpts = { httpOnly: true, sameSite: 'lax', secure: env.NODE_ENV === 'production', path: '/' };
+// In production the frontend (e.g. Vercel) and the API are on different sites, so the cookie must be SameSite=None (and Secure). Locally it stays Lax.
+const cookieOpts = { httpOnly: true, sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax', secure: env.NODE_ENV === 'production', path: '/' };
 
 export function setAuthCookie(res, visitor) {
   const token = jwt.sign({ role: visitor.role }, env.JWT_SECRET, {
