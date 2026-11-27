@@ -33,7 +33,7 @@ app.use(helmet({
   },
 }));
 if (env.NODE_ENV === 'production') app.set('trust proxy', 1); // behind the host's proxy (Railway/Render): real client IPs for rate limits
-app.use(cors({ origin: env.CLIENT_URL, credentials: true })); // CLIENT_URL must be the exact frontend origin, e.g. https://ext-xmp.vercel.app
+app.use(cors({ origin: "*"})); // CLIENT_URL must be the exact frontend origin, e.g. https://ext-xmp.vercel.app
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000, limit: env.API_RATE_LIMIT_MAX, standardHeaders: true, legacyHeaders: false,
   handler: (_req, res) => res.status(429).json({ success: false, message: 'Too many requests. Please wait a few minutes and try again.' }),
