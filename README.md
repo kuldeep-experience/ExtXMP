@@ -7,6 +7,22 @@ Standalone proof of concept for the visitor (consumer) side of a professional-se
 
 It does not depend on any existing Experience.com code. All data shown in the UI comes from the API and MongoDB; the seed scripts create the demo data.
 
+## Live demo
+**URL: https://ext-xmp-xgkh.vercel.app/**
+
+Log in with any of these demo visitors (all share the demo-only password `Demo@12345`):
+
+| Email | Password | Notes |
+|---|---|---|
+| emma.carter@example.com | `Demo@12345` | verified, best account to explore (all sections have data) |
+| liam.nguyen@example.com | `Demo@12345` | verified |
+| sofia.ramirez@example.com | `Demo@12345` | verified |
+| noah.fischer@example.com | `Demo@12345` | verified |
+| ava.thompson@example.com | `Demo@12345` | email **not** verified (shows the verification banner) |
+| suspended.demo@example.com | `Demo@12345` | suspended, login is refused on purpose |
+
+The demo data only appears if the deployed database has been seeded (see [Seed data](#seed-data)). Password reset and verification emails are not delivered anywhere in this deployment (no email provider is connected). Please do not use real personal data: the demo may be reset at any time.
+
 ## Features built in this POC
 Everything below is implemented and covered by automated tests (see [Test results](#test-results)). Anything that is only simulated is marked.
 
@@ -28,7 +44,7 @@ Everything below is implemented and covered by automated tests (see [Test result
 Not part of this POC: appointments or booking (visitors contact professionals instead), a professional or admin app, real email delivery, payments.
 
 ## Contents
-[Features](#features-built-in-this-poc) · [Local setup](#local-setup) · [Demo credentials](#demo-credentials) · [Seed data](#seed-data) · [Scripts](#scripts) · [API endpoints](#api-endpoints) · [Database models](#database-models) · [Security model](#security-model) · [AI features and demo mode](#ai-features-and-demo-mode) · [Test results](#test-results) · [Known limitations](#known-limitations)
+[Live demo](#live-demo) · [Features](#features-built-in-this-poc) · [Local setup](#local-setup) · [Demo credentials](#demo-credentials) · [Seed data](#seed-data) · [Scripts](#scripts) · [API endpoints](#api-endpoints) · [Database models](#database-models) · [Security model](#security-model) · [AI features and demo mode](#ai-features-and-demo-mode) · [Test results](#test-results) · [Known limitations](#known-limitations)
 
 ## Local setup
 Requirements: Node.js 22+, MongoDB (local, or a connection string).
