@@ -23,6 +23,7 @@ const schema = z.object({
   RECENTLY_VIEWED_DEDUP_MINUTES: z.coerce.number().int().min(0).default(30),
   // 'dev' writes emails to a local dev-only outbox; 'none' sends nothing. Forced to 'none' in production.
   EMAIL_MODE: z.enum(['dev', 'none']).default('dev'),
+  AUTO_SEED: z.enum(['true', 'false']).default('true'), // seed demo data at startup when the database is empty (never in production)
   CLIENT_URL: z.string().url().optional(), // base for links in emails and the CORS origin
 });
 
@@ -39,4 +40,5 @@ export const env = {
   SERVE_CLIENT,
   CLIENT_URL: parsed.data.CLIENT_URL ?? (SERVE_CLIENT ? `http://localhost:${parsed.data.PORT}` : 'http://localhost:5173'),
   EMAIL_MODE: parsed.data.NODE_ENV === 'production' ? 'none' : parsed.data.EMAIL_MODE,
+  AUTO_SEED: parsed.data.NODE_ENV === 'production' ? false : parsed.data.AUTO_SEED === 'true',
 };

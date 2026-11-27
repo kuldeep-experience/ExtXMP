@@ -18,7 +18,6 @@ npm run install:all
 cp server/.env.example server/.env     # set JWT_SECRET to a long random value
 cp client/.env.example client/.env     # optional, default VITE_API_URL=/api
 npm run db:start                       # terminal 1: local MongoDB, data in .data/db (skip if MongoDB already runs)
-npm run seed                           # terminal 2: demo data (see below)
 npm start                              # builds the client and serves app + API on http://localhost:5000
 ```
 
@@ -38,6 +37,7 @@ Hot-reload development: `npm run dev` (API on :5000, Vite on :5173, which proxie
 | `CLIENT_URL` | Optional, derived by default |
 | `AI_PROVIDER`, `AI_API_KEY`, `AI_MODEL`, `AI_BASE_URL` | Optional real AI provider (`openrouter`, `openai`, `anthropic`); leave empty for demo mode |
 | `REVIEW_INSIGHTS_MIN_NEW_REVIEWS`, `REVIEW_INSIGHTS_COOLDOWN_SECONDS` | Insight regeneration policy |
+| `AUTO_SEED` | `true` (default) seeds an empty database at startup; ignored in production |
 | `RECENTLY_VIEWED_DEDUP_MINUTES` | Repeat views inside this window are not counted |
 
 `client/.env.example`: `VITE_API_URL=/api`.
@@ -57,7 +57,9 @@ All demo visitors share the demo-only password **`Demo@12345`** (stored as a bcr
 Password recovery works locally: emails go to a development mailbox at **/dev/mailbox** (loopback only, not available in production).
 
 ## Seed data
-`npm run seed` is repeatable (each dataset is wiped and recreated, no duplicates; it refuses to run in production). Each dataset has its own file in `server/src/seed/`, run in dependency order by `index.js`. Random choices use a fixed seed, so every run produces the same data.
+Demo data is created **automatically when the server starts on an empty database** (so a fresh `npm start` or `npm run dev` just works). A database that already has data is never touched, and auto-seed is off in production. Set `AUTO_SEED=false` in `server/.env` to disable it.
+
+`npm run seed` resets the demo data by hand and is repeatable (each dataset is wiped and recreated, no duplicates; it refuses to run in production). Each dataset has its own file in `server/src/seed/`, run in dependency order by `index.js`. Random choices use a fixed seed, so every run produces the same data.
 
 | Dataset | File | Volume |
 |---|---|---|
