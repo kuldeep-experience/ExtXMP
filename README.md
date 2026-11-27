@@ -7,8 +7,28 @@ Standalone proof of concept for the visitor (consumer) side of a professional-se
 
 It does not depend on any existing Experience.com code. All data shown in the UI comes from the API and MongoDB; the seed scripts create the demo data.
 
+## Features built in this POC
+Everything below is implemented and covered by automated tests (see [Test results](#test-results)). Anything that is only simulated is marked.
+
+| Area | What a visitor can do |
+|---|---|
+| **Authentication** | Register, log in and out, forgot/reset password (single-use link), change password, email verification, edit profile. Login uses an HttpOnly cookie with CSRF protection and rate limiting. Emails go to a development mailbox only (simulated, nothing is delivered). |
+| **Professional directory** | Browse and search 38 professionals in 6 categories by name, category, city/state, specialization, services, minimum rating and experience, verified only, and distance. Sort, paginate, open a profile with its reviews and rating summary, and compare 2–3 professionals side by side. |
+| **Saved professionals** | Save and unsave from the directory or a profile, organise into folders (create, rename, delete), keep a private note per professional, search within saved. |
+| **Search preferences** | Save the current directory search with a name, edit, delete and re-run it. |
+| **AI recommendation assistant** | Describe what you need in plain language and get ranked professionals from the real database, each with an explanation built from real data. Follow-up messages refine the search. With a real model (OpenRouter, OpenAI-compatible or Anthropic) it also asks short follow-up questions when your request is too vague. Without a key it runs in a clearly labelled **demo mode** using built-in keyword rules. Past assistant conversations are saved. |
+| **Review insights** | Summary, strengths, concerns and trends for a professional, generated from their real reviews with links back to the source reviews. Cached and regenerated only when enough new reviews arrive. Demo analyzer by default; a real model is optional. |
+| **My Contacts (chat)** | Contact a professional from their profile, see all professionals you have contacted, chat with them, unread badges, search and delete. The professional being emailed and their reply email are **simulated** through the dev mailbox (there is no professional-side app; a dev-only endpoint stands in for a reply). |
+| **Experience history** | Log experiences with professionals (service, date, rating, would-recommend, notes), edit and delete. A timeline combines experiences, service records and contacts with filters by type, date and text. |
+| **Service records** | Track services with a professional: status (planned, in progress, completed), cost, summary, filters and total spent. |
+| **Recently viewed and history** | Recently viewed professionals, search history and recent comparisons, per-item removal, clear all, and privacy settings (turn tracking off, retention of 30–365 days). |
+| **Dashboard and UI** | Overview dashboard with quick search, AI prompt box, counts and recent activity; responsive layout (sidebar on desktop, drawer on mobile); loading, empty and error states; toasts. |
+| **Platform** | Demo data seeded automatically on an empty database (and by `npm run seed`), seed integrity check, single-process mode (`npm start` serves API and app), 156 server, 46 client and 29 browser tests. |
+
+Not part of this POC: appointments or booking (visitors contact professionals instead), a professional or admin app, real email delivery, payments.
+
 ## Contents
-[Local setup](#local-setup) · [Demo credentials](#demo-credentials) · [Seed data](#seed-data) · [Scripts](#scripts) · [API endpoints](#api-endpoints) · [Database models](#database-models) · [Security model](#security-model) · [AI features and demo mode](#ai-features-and-demo-mode) · [Test results](#test-results) · [Known limitations](#known-limitations)
+[Features](#features-built-in-this-poc) · [Local setup](#local-setup) · [Demo credentials](#demo-credentials) · [Seed data](#seed-data) · [Scripts](#scripts) · [API endpoints](#api-endpoints) · [Database models](#database-models) · [Security model](#security-model) · [AI features and demo mode](#ai-features-and-demo-mode) · [Test results](#test-results) · [Known limitations](#known-limitations)
 
 ## Local setup
 Requirements: Node.js 22+, MongoDB (local, or a connection string).

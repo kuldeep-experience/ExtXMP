@@ -8,7 +8,7 @@ export default defineConfig(({ command }) => ({
   plugins: [react(), tailwindcss()],
   server: {
     port: 5173,
-    ...(command === 'serve' && { proxy: { '/api': process.env.DEV_API_URL || 'http://localhost:5000' } }),
+    ...(command === 'serve' && { proxy: { '/api': "https://extxmp-production.up.railway.app" } }),
   },
   test: { environment: 'jsdom', setupFiles: './tests/setup.js', globals: true },
 }));
